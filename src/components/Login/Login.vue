@@ -46,7 +46,7 @@
                 vm.$refs.admin.validate((valid) => {
                     if(valid) {
                         // 发送验证用户请求
-                        vm.$axios.post('/apis/admin/login', vm.admin).then((res) => {
+                        vm.$axios.post('/mapis/admin/login', vm.admin).then((res) => {
                             if(res.data.state) {
                                 vm.$router.push('/user');
                             }

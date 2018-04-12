@@ -30,6 +30,11 @@ export default new Router({
                     component: resolve => require(['../components/article/ArticleSort.vue'], resolve)
                 },
                 {
+                    name: 'article',
+                    path: '/article/:articleId',
+                    component: resolve => require(['../components/article/addArticle.vue'], resolve)
+                },
+                {
                     path: '/vuetable',
                     component: resolve => require(['../components/page/VueTable.vue'], resolve)     // vue-datasource组件
                 },

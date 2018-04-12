@@ -106,7 +106,7 @@
             getData(){
                 let vm = this;
 
-                vm.$axios.post('/apis/user/getUsers', {page: vm.currentPage}).then((res) => {
+                vm.$axios.post('/mapis/user/getUsers', {page: vm.currentPage}).then((res) => {
                     vm.userTableData = res.data.list;
 
                     vm.total = res.data.total;
@@ -116,7 +116,7 @@
                 let vm = this;
 
                 if(vm.searchAccount) {
-                    vm.$axios.post('/apis/user/searchUser', {account: vm.searchAccount}).then((res) => {
+                    vm.$axios.post('/mapis/user/searchUser', {account: vm.searchAccount}).then((res) => {
                         vm.userTableData = res.data.list;
 
                         vm.total = res.data.total;
@@ -130,7 +130,7 @@
                 //this.$message.error('删除第'+(index+1)+'行');
                 let vm = this;
 
-                vm.$axios.post('/apis/record/getUserRecordsByUserId', {ids: [row.user_id]}).then((res) => {
+                vm.$axios.post('/mapis/record/getUserRecordsByUserId', {ids: [row.user_id]}).then((res) => {
                     if(res.data.state) {
                         // 弹出框展示测试记录
                         vm.recordTableData = res.data.list;
@@ -154,7 +154,7 @@
 
                 vm.$refs.multipleTable.clearSelection();
 
-                vm.$axios.post('/apis/record/getUserRecordsByUserId', {ids: idAry}).then((res) => {
+                vm.$axios.post('/mapis/record/getUserRecordsByUserId', {ids: idAry}).then((res) => {
                     if(res.data.state) {
                         vm.recordTableData = res.data.list;
                         vm.dialogRecordVisible = true;
@@ -167,7 +167,7 @@
             changeRecordState(recordId) {
                 let vm = this;
 
-                vm.$axios.post('/apis/record/changeRecordStatus', {recordId: recordId}).then((res) => {
+                vm.$axios.post('/mapis/record/changeRecordStatus', {recordId: recordId}).then((res) => {
                     if(res.data.state) {
                         this.$message('状态已修改');
                     }else {

@@ -35,21 +35,21 @@
                         title: '文章管理',
                         subs: [
                             {
-                                index: 'articlelist',
+                                index: '/articlelist',
                                 title: '文章列表'
                             },
                             {
-                                index: 'articlesort',
+                                index: '/articlesort',
                                 title: '分类管理'
                             },
                             {
-                                index: 'vuetable',
+                                index: '/article/0',
                                 title: '添加文章'
                             },
-                            {
-                                index: 'vuetable',
+/*                            {
+                                insdex: 'vuetable',
                                 title: '分类管理'
-                            }
+                            }*/
                         ]
                     },
                     {

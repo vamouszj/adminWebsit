@@ -125,6 +125,9 @@ a{text-decoration: none}
 .mt10 {
     margin-top: 10px;
 }
+.ml10 {
+    margin-left: 10px;
+}
 .mb10 {
     margin-bottom: 10px;
 }
@@ -144,4 +147,7 @@ a{text-decoration: none}
 }
 .cursor {
     cursor: pointer;
+}
+.right {
+    float: right;
 }

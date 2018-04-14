@@ -4,7 +4,6 @@ const urls ={
         'state|1': [0, 1],
         'msg': ''
     },
-
     /*用户管理*/
     '/mapis/user/getUsers': {
         'state': 1,
@@ -75,7 +74,6 @@ const urls ={
         'state': 1,
         'msg': ''
     },
-    //字段需要严格一致，不可多
     '/mapis/article/getArticleList': {
         'state': 1,
         'msg': '',
@@ -95,6 +93,7 @@ const urls ={
         ],
         total: 200
     },
+    //字段需要严格一致，不可多
     '/mapis/article/getArticleById': {
         'state': 1,
         'msg': '',
@@ -175,8 +174,53 @@ const urls ={
                 'picture_addr|1': []
             }
         ],
-    }
-
+    },
+    '/mapis/music/getMusicList': {
+        'state': 1,
+        'msg': '',
+        'list|10': [
+            {
+                'music_id|+1': 1,
+                'typeName': '@ctitle(5)',
+                'typeId|1': [1, 2, 3, 4, 5],
+                'name': '@ctitle(10)',
+                'musician': '@ctitle(10)',
+                'upload_date': '@date()',
+                'description': '@ctitle(60)',
+                'play_num|+100': 1,
+                'img_addr|1': ['/static/img/img.jpg'],
+                'save_addr|1': ['/static/song/song1.mp3', '/static/song/song2.mp3']
+            }
+        ],
+        'total': 200
+    },
+    '/mapis/music/getMusicById': {
+        'state': 1,
+        'msg': '',
+        'list': {
+            'music_id|+1': 1,
+            /*'typeName': '@ctitle(5)',*/
+            'typeId|1': [1, 2, 3, 4, 5],
+            'name': '@ctitle(10)',
+            'musician': '@ctitle(10)',
+            'upload_date': '@date()',
+            'description': '@ctitle(60)',
+            'play_num|+100': 1,
+            'img_addr|1': ['/static/img/img.jpg'],
+            'save_addr|1': ['/static/song/song1.mp3', '/static/song/song2.mp3']
+        }
+    },
+    '/mapis/music/getLabels': {
+        'state': 1,
+        'msg': '',
+        'list|12': [
+            {
+                'music_label_id|1': [1, 2, 3, 4, 5],
+                'music_label_name': '@ctitle(5)',
+                'music_label_status': true
+            }
+        ]
+    },
 
 };
 

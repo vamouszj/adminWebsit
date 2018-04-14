@@ -35,6 +35,16 @@ export default new Router({
                     component: resolve => require(['../components/article/addArticle.vue'], resolve)
                 },
                 {
+                    path: '/musicList',
+                    component: resolve => require(['../components/music/MusicList.vue'], resolve)
+                },
+                {
+                    name: '/music',
+                    path: '/music/:musicId',
+                    component: resolve => require(['../components/music/AddMusic.vue'], resolve)
+                },
+
+                {
                     path: '/vuetable',
                     component: resolve => require(['../components/page/VueTable.vue'], resolve)     // vue-datasource组件
                 },

@@ -45,18 +45,18 @@
                             {
                                 index: '/article/0',
                                 title: '添加文章'
-                            },
-/*                            {
-                                insdex: 'vuetable',
-                                title: '分类管理'
-                            }*/
+                            }
                         ]
                     },
                     {
                         icon: 'el-icon-date',
                         index: '3',
-                        title: '表单',
+                        title: '音乐管理',
                         subs: [
+                            {
+                                index: '/articlelist',
+                                title: '音乐列表'
+                            },
                             {
                                 index: 'baseform',
                                 title: '基本表单'

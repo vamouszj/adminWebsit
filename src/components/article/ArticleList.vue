@@ -114,7 +114,7 @@
             getData(){
                 let vm = this;
 
-                vm.$axios.post('/mapis/article/getArticleList', {page:self.currentPage}).then((res) => {
+                vm.$axios.post('/mapis/article/getArticleList', {page:vm.currentPage}).then((res) => {
                     if(res.data.state) {
                         vm.tableData = res.data.list;
                         vm.total = res.data.total;

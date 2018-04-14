@@ -3,7 +3,7 @@ node_modules/
 dist/
 npm-debug.log
 /node_modules
-/static/song
+/static/song/
 
 
 # Editor directories and files

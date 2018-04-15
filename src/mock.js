@@ -174,6 +174,7 @@ const urls ={
                 'picture_addr|1': []
             }
         ],
+        'total': 4
     },
     '/mapis/music/getMusicList': {
         'state': 1,
@@ -221,7 +222,58 @@ const urls ={
             }
         ]
     },
-
+    /*入参就是一个formData*/
+    '/mapis/music/editMusic': {
+        'state': 1,
+        'msg': ''
+    },
+    '/mapis/music/addMusic': {
+        'state': 1,
+        'msg': '',
+        'musicId|+12': 2324
+    },
+    '/mapis/music/searchMusics': {
+        'state': 1,
+        'msg': '',
+        'list|4': [
+            {
+                'music_id|+1': 1,
+                'typeName': '@ctitle(5)',
+                'typeId|1': [1, 2, 3, 4, 5],
+                'name': '@ctitle(10)',
+                'musician': '@ctitle(10)',
+                'upload_date': '@date()',
+                'description': '@ctitle(60)',
+                'play_num|+100': 1,
+                'img_addr|1': ['/static/img/img.jpg'],
+                'save_addr|1': ['/static/song/song1.mp3', '/static/song/song2.mp3']
+            }
+        ],
+        'total': 4
+    },
+    '/mapis/music/deleteMusics': {
+        'state': 1,
+        'msg': ''
+    },
+    '/mapis/music/getLabels': {
+        'state': 1,
+        'msg': '',
+        'list|12': [
+            {
+                'article_type_id|1': [1, 2, 3, 4, 5],
+                'article_type_name': '@ctitle(5)',
+                'article_type_status': true
+            }
+        ]
+    },
+    '/mapis/music/changeLabelStatus': {
+        'state': 1,
+        'msg': ''
+    },
+    '/mapis/music/addLabel': {
+        'state': 1,
+        'msg': ''
+    },
 };
 
 Mock.mock(/mapis/, (req, res) => {

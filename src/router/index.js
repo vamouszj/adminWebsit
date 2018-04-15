@@ -39,9 +39,13 @@ export default new Router({
                     component: resolve => require(['../components/music/MusicList.vue'], resolve)
                 },
                 {
-                    name: '/music',
+                    name: 'music',
                     path: '/music/:musicId',
                     component: resolve => require(['../components/music/AddMusic.vue'], resolve)
+                },
+                {
+                    path: '/musicsort',
+                    component: resolve => require(['../components/music/MusicSort.vue'], resolve)
                 },
 
                 {

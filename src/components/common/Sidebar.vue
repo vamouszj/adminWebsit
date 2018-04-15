@@ -54,24 +54,16 @@
                         title: '音乐管理',
                         subs: [
                             {
-                                index: '/articlelist',
+                                index: '/musicList',
                                 title: '音乐列表'
                             },
                             {
-                                index: 'baseform',
-                                title: '基本表单'
+                                index: '/musicsort',
+                                title: '分类管理'
                             },
                             {
-                                index: 'vueeditor',
-                                title: '编辑器'
-                            },
-                            {
-                                index: 'markdown',
-                                title: 'markdown'
-                            },
-                            {
-                                index: 'upload',
-                                title: '文件上传'
+                                index: '/music/0',
+                                title: '添加音乐'
                             }
                         ]
                     },

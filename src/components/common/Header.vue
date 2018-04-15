@@ -18,13 +18,18 @@
     export default {
         data() {
             return {
-                name: 'linxin'
+                name: ''
             }
         },
         computed:{
             username(){
-                let username = localStorage.getItem('ms_username');
-                return username ? username : this.name;
+                let username = sessionStorage.getItem('usr');
+                let vm = this;
+                if(!username) {
+                    vm.$router.push('/login');
+                    return;
+                }
+                return username;
             }
         },
         methods:{

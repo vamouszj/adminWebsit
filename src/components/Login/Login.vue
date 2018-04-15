@@ -12,7 +12,6 @@
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm">登录</el-button>
                 </div>
-                <!--<p style="font-size:12px;line-height:30px;color:#999;">Tips : 用户名和密码随便填。</p>-->
             </el-form>
         </div>
         <img src="../../assets/foot.jpg" class="foot-img">
@@ -48,6 +47,7 @@
                         // 发送验证用户请求
                         vm.$axios.post('/mapis/admin/login', vm.admin).then((res) => {
                             if(res.data.state) {
+                                sessionStorage.setItem('usr', vm.admin.account);
                                 vm.$router.push('/user');
                             }
                         });

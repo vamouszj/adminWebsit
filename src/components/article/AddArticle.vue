@@ -121,9 +121,8 @@
                     }
                 });
             },
-            getFormData(keyArray, formData) {
+            getFormData(keyArray, formData, skipAry) {
                 let vm = this;
-              //  let formData = new FormData();
 
                 if(Object.keys(vm.article).length < keyArray.length) {
                     vm.$message.error('请检查内容，内容都不可为空');
@@ -131,6 +130,10 @@
                 }
 
                 for(let key in vm.article) {
+                    if(skipAry.indexOf(key) != -1) {
+                        continue;
+                    }
+
                     if(vm.article[key] && keyArray.indexOf(key) != -1) {
                         formData.append(key, vm.article[key]);
                     }else {
@@ -139,36 +142,25 @@
                         return;
                     }
                 }
-                console.log('11 ' + formData.get('typeId'));
-                //return formData;
             },
             editArticle() {
                 let vm = this;
                 let keyArray = ['article_id', 'title', 'upload_date', 'typeId', 'author', 'description', 'content', 'read_num'];
                 let formData = new FormData();
+                let skipAry = ['picture_addr'];
                 let params = null;
 
-                if(vm.$refs.file.files[0]) {  //新选择了文件
-                    // 需要创建formData
-
-                    delete vm.article.picture_addr;
-                    vm.getFormData(keyArray, formData);
+                vm.getFormData(keyArray, formData, skipAry);
+                if(vm.$refs.file.files[0]) {
                     formData.append('picture_addr', vm.$refs.file.files[0]);
-                    params = formData;
                 }else {
-                    // 不需要创建formData
-                    for(let key in vm.article) {
-                        if(!vm.article[key]) {
-                            vm.$message.error('请检查内容，内容都不可为空')
-                            return;
-                        }
-                    }
-                    params = vm.article;
+                    formData.append('picture_addr', vm.music.picture_addr)
                 }
 
-                vm.$axios.post('/mapis/article/editArticle', {article: params}).then((res) => {
+
+                vm.$axios.post('/mapis/article/editArticle', {article: formData}).then((res) => {
                     if(res.data.state) {
-                        vm.getArticleById(res.data.articleId);
+                        vm.getArticleById(vm.articleId);
                         vm.disabled = true;
                     }
                 });
@@ -184,12 +176,10 @@
                 }
 
                 //read_num和upload_date在钩子函数中已经初始化，保证在getFormData不因为此两个字段而出错
-                vm.getFormData(keyArray, formData);
+                vm.getFormData(keyArray, formData, []);
                 formData.append('picture_addr', vm.$refs.file.files[0]);
 
-                console.log(formData.get('typeId'), formData.get('title'));
-
-                vm.$axios.post('/mapis/article/addArticle', {article: vm.article}).then((res) => {
+                vm.$axios.post('/mapis/article/addArticle', {article: formData}).then((res) => {
                     if(res.data.state) {
                         vm.getArticleById(res.data.articleId);
                         vm.disabled = true;

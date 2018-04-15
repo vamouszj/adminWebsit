@@ -9,7 +9,7 @@
         <div class="handle-box">
             <div class="table">
                 <div class="handle-box mb15">
-                    <el-button type="primary" icon="delete" class="handle-del mr10" @click="deleteArticles">批量删除</el-button>
+                    <el-button type="primary" icon="delete" class="handle-del mr10" @click="deleteMusics">批量删除</el-button>
                     <el-button type="primary" icon="search" @click="search" class="right">搜索</el-button>
                     <el-input v-model="selectWord" placeholder="筛选关键词" class="handle-input mr10 right" style="width: 200px;"></el-input>
 
@@ -36,25 +36,19 @@
                     </el-table-column>
                     <el-table-column prop="upload_date" label="上传时间" width="120">
                     </el-table-column>
-                    <el-table-column prop="play_num" label="已听人数" width="110">
+                    <el-table-column prop="play_num" label="已听人数" width="90">
                     </el-table-column>
                     <el-table-column width="180" label="播放">
                         <template slot-scope="scope">
                             <audio :src="scope.row.save_addr" controls="controls">
                                 请升级浏览器
                             </audio>
-<!--                            <el-button size="small" type="text"
-                                       @click="checkArticleDetails(scope.row)">播放</el-button>-->
                         </template>
                     </el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
                             <el-button size="small" type="info"
-                                       @click="checkArticleDetails(scope.row)">编辑</el-button>
-                            <el-button size="small" type="text"
-                                       @click="checkArticleDetails(scope.row)">
-                            </el-button>
-
+                                       @click="editMusic(scope.row)">编辑</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -119,88 +113,45 @@
                     return;
                 }
 
-                vm.$axios.post('/mapis/article/searchArticles', {keyWord: vm.selectWord}).then((res) => {
+                vm.$axios.post('/mapis/music/searchMusics', {keyWord: vm.selectWord}).then((res) => {
                     if(res.data.state) {
                         vm.tableData = res.data.list;
                         vm.total = res.data.total;
                     }
                 })
             },
-            checkArticleDetails(row) {
-                //this.$message.error('删除第'+(index+1)+'行');
+            editMusic(row) {
                 let vm = this;
 
                 vm.$router.push({
-                    name: 'article',
+                    name: 'music',
                     params: {
-                        articleId: row.article_id
+                        musicId: row.music_id
                     }
                 })
             },
-            deleteArticles(){
+            deleteMusics(){
                 let vm = this;
-                let articlesId = [];
+                let musicsId = [];
 
                 if(vm.multipleSelection.length <= 0) {
                     vm.$message.error('请至少选择一条数据');
                     return;
                 }
 
-                articlesId = vm.multipleSelection.map((item) => {
-                    return item.article_id;
+                musicsId = vm.multipleSelection.map((item) => {
+                    return item.music_id;
                 });
 
-
-                vm.$axios.post('/mapis/article/deleteArticles', {articlesId: articlesId}).then((res) => {
+                vm.$axios.post('/mapis/music/deleteMusics', {musicsId: musicsId}).then((res) => {
                     vm.multipleSelection = [];
                     if(res.data.state) {
                         vm.getData();
                     }
                 });
-
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
-            },
-            deleteMoreComment(commentId) {
-                let vm = this;
-
-                vm.$axios.post('/mapis/article/deleteMoreLevelComment', {commentId: commentId}).then((res) => {
-                    if(res.data.state) {
-                        vm.$message('复合评论删除成功');
-                    }
-                });
-            },
-            deleteFirstComment(commentId) {
-                let vm = this;
-
-                vm.$axios.post('/mapis/article/deleteFirstLevelComment', {commentId: commentId}).then((res) => {
-                    if(res.data.state) {
-                        vm.$message('评论删除成功');
-                    }
-                });
-            },
-            getMoreLevelComment(row) {
-                let vm = this;
-
-                vm.currentArticleId = row.article_id;
-                vm.$axios.post('/mapis/article/getMoreLevelComment', {articleId: row.article_id}).then((res) => {
-                    if(res.data.state) {
-                        vm.moreLevelComment = res.data.list;
-                        vm.moreLevelVisible = true;
-                    }
-                });
-            },
-            getFirstLevelComment(row) {
-                let vm = this;
-
-                vm.currentArticleId = row.article_id;
-                vm.$axios.post('/mapis/article/getFirstLevelComment', {articleId: row.article_id}).then((res) => {
-                    if(res.data.state) {
-                        vm.firstLevelComment = res.data.list;
-                        vm.firstLevelVisible = true;
-                    }
-                });
             }
         }
     }

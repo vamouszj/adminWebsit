@@ -111,7 +111,7 @@
                     }
                 });
             },
-            getFormData(keyArray, formData) {
+            getFormData(keyArray, formData, skipAry) {
                 let vm = this;
 
                 if(Object.keys(vm.music).length < keyArray.length) {
@@ -120,6 +120,10 @@
                 }
 
                 for(let key in vm.music) {
+                    if(skipAry.indexOf(key) != -1) {
+                        continue;
+                    }
+
                     if(vm.music[key] && keyArray.indexOf(key) != -1) {
                         formData.append(key, vm.music[key]);
                     }else {
@@ -128,62 +132,51 @@
                         return;
                     }
                 }
-                console.log('11 ' + formData.get('typeId'));
-                //return formData;
             },
             //TODO
             editArticle() {
                 let vm = this;
-                let keyArray = ['music_id', 'name', 'musician', 'typeId', 'upload_date', 'description', 'play_num', 'img_addr', 'save_addr'];
+                let keyArray = ['music_id', 'name', 'musician', 'typeId', 'upload_date', 'description', 'play_num'];
+                let skipAry = ['img_addr', 'save_addr'];
                 let formData = new FormData();
-                let params = null;
 
-                for(let item in vm.music) {
-
-                }
-
-                if(vm.$refs.picture.files[0]) {  //新选择了文件
-                    // 需要创建formData
-
-                    delete vm.music.picture_addr;
-                    vm.getFormData(keyArray, formData);
-                    formData.append('img_addr', vm.$refs.file.files[0]);
-                    params = formData;
+                vm.getFormData(keyArray, formData, skipAry);
+                if(vm.$refs.picture.files[0]) {
+                    formData.append('img_addr', vm.$refs.picture.files[0]);
                 }else {
-                    // 不需要创建formData
-                    for(let key in vm.music) {
-                        if(!vm.music[key]) {
-                            vm.$message.error('请检查内容，内容都不可为空')
-                            return;
-                        }
-                    }
-                    params = vm.music;
+                    formData.append('img_addr', vm.music.img_addr)
                 }
 
-                vm.$axios.post('/mapis/music/editArticle', {music: params}).then((res) => {
+                if(vm.$refs.audio.files[0]) {
+                    formData.append('save_addr', vm.$refs.audio.files[0]);
+                }else {
+                    formData.append('save_addr', vm.music.save_addr)
+                }
+
+                vm.$axios.post('/mapis/music/editMusic', {music: formData}).then((res) => {
                     if(res.data.state) {
-                        vm.getMusicById(res.data.musicId);
-                        vm.disabled = true;
+                       vm.getMusicById(vm.musicId);
+                       vm.disabled = true;
                     }
                 });
             },
             addArticle() {
                 let vm = this;
-                let keyArray = ['title', 'upload_date', 'typeId', 'author', 'description', 'content', 'read_num'];
+                let keyArray = ['name', 'musician', 'typeId', 'upload_date', 'description', 'play_num'];
                 let formData = new FormData();
 
-                if(!vm.$refs.file.files[0]) {
+                //play_num和upload_date在钩子函数中已经初始化，保证在getFormData不因为此两个字段而出错
+                vm.getFormData(keyArray, formData, []);
+
+                if(!vm.$refs.picture.files[0] || !vm.$refs.audio.files[0]) {
                     vm.$message.error('请检查内容，内容都不可为空')
                     return;
                 }
 
-                //read_num和upload_date在钩子函数中已经初始化，保证在getFormData不因为此两个字段而出错
-                vm.getFormData(keyArray, formData);
-                formData.append('picture_addr', vm.$refs.file.files[0]);
+                formData.append('img_addr', vm.$refs.picture.files[0]);
+                formData.append('save_addr', vm.$refs.audio.files[0]);
 
-                console.log(formData.get('typeId'), formData.get('title'));
-
-                vm.$axios.post('/mapis/music/addArticle', {music: vm.music}).then((res) => {
+                vm.$axios.post('/mapis/music/addMusic', {music: formData}).then((res) => {
                     if(res.data.state) {
                         vm.getMusicById(res.data.musicId);
                         vm.disabled = true;

@@ -25,7 +25,7 @@
 
 <script>
     export default {
-        name: "article-sort",
+        name: "music-sort",
         data() {
             return {
                 labelList: [],
@@ -39,7 +39,7 @@
             getLabelLists() {
                 let vm = this;
 
-                vm.$axios.post('/mapis/article/getLabels').then((res) => {
+                vm.$axios.post('/mapis/music/getLabels').then((res) => {
                     if(res.data.state) {
                         vm.labelList = res.data.list;
                     }
@@ -48,7 +48,7 @@
             removeLabel(labelId) {
                 let vm = this;
 
-                vm.$axios.post('/mapis/article/changeLabelStatus', {labelId: labelId}).then((res) => {
+                vm.$axios.post('/mapis/music/changeLabelStatus', {labelId: labelId}).then((res) => {
                     if(res.data.state) {
                         vm.$message('标签移除成功');
                         vm.getLabelLists();
@@ -67,7 +67,7 @@
                     return;
                 }
 
-                vm.$axios.post('/mapis/article/addLabel', {labelName: vm.labelName}).then((res) => {
+                vm.$axios.post('/mapis/music/addLabel', {labelName: vm.labelName}).then((res) => {
                     if(res.data.state) {
                         vm.$message('标签添加成功');
                         vm.labelName = '';

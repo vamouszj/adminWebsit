@@ -47,6 +47,34 @@ export default new Router({
                     path: '/musicsort',
                     component: resolve => require(['../components/music/MusicSort.vue'], resolve)
                 },
+                {
+                    path: '/forumlist',
+                    component: resolve => require(['../components/forum/ForumList.vue'], resolve)
+                },
+                {
+                    path: '/forumsort',
+                    component: resolve => require(['../components/forum/ForumSort.vue'], resolve)
+                },
+                {
+                    path: '/testlist',
+                    component: resolve => require(['../components/test/TestList.vue'], resolve)
+                },
+                {
+
+                    name: 'testpaper',
+                    path: '/testpaper/:testId',
+                    component: resolve => require(['../components/test/TestPaper.vue'], resolve)
+                },
+                {
+                    name: 'testquestion',
+                    path: '/testquestion/:testId',
+                    component: resolve => require(['../components/test/TestQuestion.vue'], resolve)
+                },
+                {
+                    name: 'testanswer',
+                    path: '/testanswer/:testId',
+                    component: resolve => require(['../components/test/TestAnswer.vue'], resolve)
+                },
 
                 {
                     path: '/vuetable',

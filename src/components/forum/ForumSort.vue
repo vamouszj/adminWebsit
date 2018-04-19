@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-menu"></i> 音乐管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-menu"></i> 论坛管理</el-breadcrumb-item>
                 <el-breadcrumb-item>分类管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -15,8 +15,8 @@
             <p class="gray">已有标签:</p>
             <div class="label-div">
                 <span class="cursor label" v-for="item in labelList">
-                    {{item.music_label_name}}
-                    <span class="gray ml10" @click="removeLabel(item.music_label_id)">×</span>
+                    {{item.forum_label_name}}
+                    <span class="gray ml10" @click="removeLabel(item.forum_label_id)">×</span>
                 </span>
             </div>
         </div>
@@ -25,7 +25,7 @@
 
 <script>
     export default {
-        name: "music-sort",
+        name: "forum-sort",
         data() {
             return {
                 labelList: [],
@@ -39,7 +39,7 @@
             getLabelLists() {
                 let vm = this;
 
-                vm.$axios.post('/mapis/music/getLabels').then((res) => {
+                vm.$axios.post('/mapis/forum/getLabels').then((res) => {
                     if(res.data.state) {
                         vm.labelList = res.data.list;
                     }
@@ -48,7 +48,7 @@
             removeLabel(labelId) {
                 let vm = this;
 
-                vm.$axios.post('/mapis/music/changeLabelStatus', {labelId: labelId}).then((res) => {
+                vm.$axios.post('/mapis/forum/changeLabelStatus', {labelId: labelId}).then((res) => {
                     if(res.data.state) {
                         vm.$message('标签移除成功');
                         vm.getLabelLists();
@@ -67,7 +67,7 @@
                     return;
                 }
 
-                vm.$axios.post('/mapis/music/addLabel', {labelName: vm.labelName}).then((res) => {
+                vm.$axios.post('/mapis/forum/addLabel', {labelName: vm.labelName}).then((res) => {
                     if(res.data.state) {
                         vm.$message('标签添加成功');
                         vm.labelName = '';
@@ -110,3 +110,4 @@
         margin-top: 8px;
     }
 </style>
+

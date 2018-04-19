@@ -68,15 +68,35 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-star-on',
-                        index: 'basecharts',
-                        title: '图表'
+                        icon: 'el-icon-date',
+                        index: '4',
+                        title: '论坛管理',
+                        subs: [
+                            {
+                                index: '/forumlist',
+                                title: '论坛列表'
+                            },
+                            {
+                                index: '/forumsort',
+                                title: '分类管理'
+                            }
+                        ]
                     },
                     {
                         icon: 'el-icon-upload2',
-                        index: 'drag',
-                        title: '拖拽'
-                    }
+                        index: '5',
+                        title: '测试管理',
+                        subs: [
+                            {
+                                index: '/testlist',
+                                title: '测试列表'
+                            },
+                            {
+                                index: '/forumsort',
+                                title: '分类管理'
+                            }
+                        ]
+                    },
                 ]
             }
         },

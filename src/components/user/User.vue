@@ -116,7 +116,7 @@
                 let vm = this;
 
                 if(vm.searchAccount) {
-                    vm.$axios.post('/mapis/user/searchUser', {account: vm.searchAccount}).then((res) => {
+                    vm.$axios.post('/mapis/user/searchUser', {keyWord: vm.searchAccount}).then((res) => {
                         vm.userTableData = res.data.list;
 
                         vm.total = res.data.total;

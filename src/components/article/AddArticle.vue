@@ -154,7 +154,7 @@
                 if(vm.$refs.file.files[0]) {
                     formData.append('picture_addr', vm.$refs.file.files[0]);
                 }else {
-                    formData.append('picture_addr', vm.music.picture_addr)
+                    formData.append('picture_addr', vm.article.picture_addr)
                 }
 
 

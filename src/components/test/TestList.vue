@@ -2,8 +2,8 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-menu"></i> 文章管理</el-breadcrumb-item>
-                <el-breadcrumb-item>文章列表</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-menu"></i> 测试管理</el-breadcrumb-item>
+                <el-breadcrumb-item>测试列表</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="handle-box">
@@ -16,27 +16,39 @@
                 </div>
                 <el-table :data="tableData" border style="width: 100%;" ref="multipleTable" @selection-change="handleSelectionChange">
                     <el-table-column type="selection" width="55"></el-table-column>
-                    <el-table-column label="#" width="70">
+                    <el-table-column label="#" width="60">
                         <template slot-scope="scope">
-                            <span style="margin-left: 10px">{{scope.$index + 1}}</span>
+                            <span style="margin-left: 6px">{{scope.$index + 1}}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="title" label="标题" width="200">
+                    <el-table-column prop="test_name" label="测试标题" width="220">
                     </el-table-column>
-                    <el-table-column prop="upload_date" label="上传日期" width="120">
+                    <el-table-column prop="test_name" label="类型" width="170">
                     </el-table-column>
-                    <el-table-column prop="typeName" label="类型" width="100">
+                    <el-table-column prop="test_num" label="测试人数" width="100">
                     </el-table-column>
-                    <el-table-column prop="author" label="作者" width="200">
+                    <el-table-column label="图片" width="150">
+                        <template slot-scope="scope">
+                            <img :src="scope.row.picture_addr" style="width: 100px">
+                        </template>
                     </el-table-column>
+                    <el-table-column label="测试题目" width="95">
+                        <template slot-scope="scope">
+                            <el-button size="small"
+                                       @click="checkTestQuestionDetails(scope.row)">查看</el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="测试结果" width="95">
+                        <template slot-scope="scope">
+                            <el-button size="small"
+                                       @click="checkTestAnswerDetails(scope.row)">查看</el-button>
+                        </template>
+                    </el-table-column>
+
                     <el-table-column label="操作">
                         <template slot-scope="scope">
                             <el-button size="small" type="info"
-                                       @click="checkArticleDetails(scope.row)">详情</el-button>
-                            <el-button size="small"
-                                       @click="getFirstLevelComment(scope.row.article_id)">一级评论</el-button>
-                            <el-button size="small"
-                                       @click="getMoreLevelComment(scope.row.article_id)">多级评论</el-button>
+                                       @click="editTestDetails(scope.row)">编辑</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -50,35 +62,6 @@
                     </el-pagination>
                 </div>
             </div>
-
-            <el-dialog title="一级评论" :visible.sync="firstLevelVisible" style="width: 110%;margin-left: -8%;">
-                <el-table :data="firstLevelComment">
-                    <el-table-column property="user_name" label="账号" width="150"></el-table-column>
-                    <el-table-column property="comment_date" label="日期" width="120"></el-table-column>
-                    <el-table-column property="content" label="内容" width="330"></el-table-column>
-                    <el-table-column label="操作">
-                        <template slot-scope="scope">
-                            <el-button size="small" type="info"
-                                       @click="deleteFirstComment(scope.row.comment_id)">删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-dialog>
-
-            <el-dialog title="多级评论" :visible.sync="moreLevelVisible" style="width: 130%;margin-left: -14%;">
-                <el-table :data="moreLevelComment">
-                    <el-table-column property="user_one" label="评论者" width="150"></el-table-column>
-                    <el-table-column property="user_two" label="被评论者" width="150"></el-table-column>
-                    <el-table-column property="aml_comment_date" label="日期" width="120"></el-table-column>
-                    <el-table-column property="aml_content" label="内容" width="330"></el-table-column>
-                    <el-table-column label="操作">
-                        <template slot-scope="scope">
-                            <el-button size="small" type="info"
-                                       @click="deleteMoreComment(scope.row.ml_comment_id)">删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-dialog>
         </div>
 
     </div>
@@ -86,20 +69,14 @@
 
 <script>
     export default {
-        name: 'user',
+        name: "test-list",
         data() {
             return {
                 tableData: [],
-                firstLevelComment: [],
-                moreLevelComment: [],
                 currentPage: 1,
                 multipleSelection: [],  // 选中的数据
-                select_cate: '',
                 selectWord: '',
                 total: '',
-                firstLevelVisible: false,
-                moreLevelVisible: false,
-                currentArticleId: ''
             }
         },
         created(){
@@ -114,7 +91,7 @@
             getData(){
                 let vm = this;
 
-                vm.$axios.post('/mapis/article/getArticleList', {page:vm.currentPage}).then((res) => {
+                vm.$axios.post('/mapis/test/getTestList', {page:vm.currentPage}).then((res) => {
                     if(res.data.state) {
                         vm.tableData = res.data.list;
                         vm.total = res.data.total;
@@ -136,16 +113,37 @@
                     }
                 })
             },
-            checkArticleDetails(row) {
-                //this.$message.error('删除第'+(index+1)+'行');
+            checkTestQuestionDetails(row) {
                 let vm = this;
 
                 vm.$router.push({
-                    name: 'article',
+                    name: 'testquestion',
                     params: {
-                        articleId: row.article_id
+                        testId: row.test_id
                     }
                 })
+            },
+            checkTestAnswerDetails(row) {
+                let vm = this;
+
+                vm.$router.push({
+                    name: 'testanswer',
+                    params: {
+                        testId: row.test_id
+                    }
+                })
+            },
+            //todo
+            editTestDetails(row) {
+                let vm = this;
+
+                vm.$router.push({
+                    name: 'testpaper',
+                    params: {
+                        testId: row.test_id
+                    }
+                })
+
             },
             deleteArticles(){
                 let vm = this;
@@ -171,48 +169,6 @@
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
-            },
-            deleteMoreComment(commentId) {
-                let vm = this;
-
-                vm.$axios.post('/mapis/article/deleteMoreLevelComment', {commentId: commentId}).then((res) => {
-                    if(res.data.state) {
-                        vm.$message('复合评论删除成功');
-                        vm.getMoreLevelComment(vm.currentArticleId);
-                    }
-                });
-            },
-            deleteFirstComment(commentId) {
-                let vm = this;
-
-                vm.$axios.post('/mapis/article/deleteFirstLevelComment', {commentId: commentId}).then((res) => {
-                    if(res.data.state) {
-                        vm.$message('评论删除成功');
-                        vm.getFirstLevelComment(vm.currentArticleId);
-                    }
-                });
-            },
-            getMoreLevelComment(articleId) {
-                let vm = this;
-
-                vm.currentArticleId = articleId;
-                vm.$axios.post('/mapis/article/getMoreLevelComment', {articleId: articleId}).then((res) => {
-                    if(res.data.state) {
-                        vm.moreLevelComment = res.data.list;
-                        vm.moreLevelVisible = true;
-                    }
-                });
-            },
-            getFirstLevelComment(articleId) {
-                let vm = this;
-
-                vm.currentArticleId = articleId;
-                vm.$axios.post('/mapis/article/getFirstLevelComment', {articleId: articleId}).then((res) => {
-                    if(res.data.state) {
-                        vm.firstLevelComment = res.data.list;
-                        vm.firstLevelVisible = true;
-                    }
-                });
             }
         }
     }

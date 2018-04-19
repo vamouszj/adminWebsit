@@ -2,8 +2,8 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-menu"></i> 文章管理</el-breadcrumb-item>
-                <el-breadcrumb-item>文章列表</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-menu"></i> 论坛管理</el-breadcrumb-item>
+                <el-breadcrumb-item>论坛列表</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="handle-box">
@@ -23,20 +23,20 @@
                     </el-table-column>
                     <el-table-column prop="title" label="标题" width="200">
                     </el-table-column>
-                    <el-table-column prop="upload_date" label="上传日期" width="120">
+                    <el-table-column prop="nickname" label="用户" width="130">
                     </el-table-column>
-                    <el-table-column prop="typeName" label="类型" width="100">
+                    <el-table-column prop="typeName" label="类型" width="120">
                     </el-table-column>
-                    <el-table-column prop="author" label="作者" width="200">
+                    <el-table-column prop="content" label="内容" width="350">
                     </el-table-column>
-                    <el-table-column label="操作">
+                    <el-table-column prop="publish_date" label="日期" width="120">
+                    </el-table-column>
+                    <el-table-column label="操作" width="200">
                         <template slot-scope="scope">
-                            <el-button size="small" type="info"
-                                       @click="checkArticleDetails(scope.row)">详情</el-button>
                             <el-button size="small"
-                                       @click="getFirstLevelComment(scope.row.article_id)">一级评论</el-button>
+                                       @click="getFirstLevelComment(scope.row.forum_id)">一级评论</el-button>
                             <el-button size="small"
-                                       @click="getMoreLevelComment(scope.row.article_id)">多级评论</el-button>
+                                       @click="getMoreLevelComment(scope.row.forum_id)">多级评论</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -69,8 +69,8 @@
                 <el-table :data="moreLevelComment">
                     <el-table-column property="user_one" label="评论者" width="150"></el-table-column>
                     <el-table-column property="user_two" label="被评论者" width="150"></el-table-column>
-                    <el-table-column property="aml_comment_date" label="日期" width="120"></el-table-column>
-                    <el-table-column property="aml_content" label="内容" width="330"></el-table-column>
+                    <el-table-column property="fml_comment_date" label="日期" width="120"></el-table-column>
+                    <el-table-column property="fml_content" label="内容" width="330"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
                             <el-button size="small" type="info"
@@ -86,7 +86,7 @@
 
 <script>
     export default {
-        name: 'user',
+        name: "forum-list",
         data() {
             return {
                 tableData: [],
@@ -94,12 +94,11 @@
                 moreLevelComment: [],
                 currentPage: 1,
                 multipleSelection: [],  // 选中的数据
-                select_cate: '',
                 selectWord: '',
                 total: '',
                 firstLevelVisible: false,
                 moreLevelVisible: false,
-                currentArticleId: ''
+                currentForumId: ''
             }
         },
         created(){
@@ -114,7 +113,7 @@
             getData(){
                 let vm = this;
 
-                vm.$axios.post('/mapis/article/getArticleList', {page:vm.currentPage}).then((res) => {
+                vm.$axios.post('/mapis/forum/getForumList', {page:vm.currentPage}).then((res) => {
                     if(res.data.state) {
                         vm.tableData = res.data.list;
                         vm.total = res.data.total;
@@ -129,39 +128,28 @@
                     return;
                 }
 
-                vm.$axios.post('/mapis/article/searchArticles', {keyWord: vm.selectWord}).then((res) => {
+                vm.$axios.post('/mapis/forum/searchForums', {keyWord: vm.selectWord}).then((res) => {
                     if(res.data.state) {
                         vm.tableData = res.data.list;
                         vm.total = res.data.total;
                     }
                 })
             },
-            checkArticleDetails(row) {
-                //this.$message.error('删除第'+(index+1)+'行');
-                let vm = this;
-
-                vm.$router.push({
-                    name: 'article',
-                    params: {
-                        articleId: row.article_id
-                    }
-                })
-            },
             deleteArticles(){
                 let vm = this;
-                let articlesId = [];
+                let forumsId = [];
 
                 if(vm.multipleSelection.length <= 0) {
                     vm.$message.error('请至少选择一条数据');
                     return;
                 }
 
-                articlesId = vm.multipleSelection.map((item) => {
-                    return item.article_id;
+                forumsId = vm.multipleSelection.map((item) => {
+                    return item.forum_id;
                 });
 
 
-                vm.$axios.post('/mapis/article/deleteArticles', {articlesId: articlesId}).then((res) => {
+                vm.$axios.post('/mapis/forum/deleteForums', {forumsId: forumsId}).then((res) => {
                     vm.multipleSelection = [];
                     if(res.data.state) {
                         vm.getData();
@@ -175,39 +163,39 @@
             deleteMoreComment(commentId) {
                 let vm = this;
 
-                vm.$axios.post('/mapis/article/deleteMoreLevelComment', {commentId: commentId}).then((res) => {
+                vm.$axios.post('/mapis/forum/deleteMoreLevelComment', {commentId: commentId}).then((res) => {
                     if(res.data.state) {
                         vm.$message('复合评论删除成功');
-                        vm.getMoreLevelComment(vm.currentArticleId);
+                        vm.getMoreLevelComment(vm.currentForumId);
                     }
                 });
             },
             deleteFirstComment(commentId) {
                 let vm = this;
 
-                vm.$axios.post('/mapis/article/deleteFirstLevelComment', {commentId: commentId}).then((res) => {
+                vm.$axios.post('/mapis/forum/deleteFirstLevelComment', {commentId: commentId}).then((res) => {
                     if(res.data.state) {
                         vm.$message('评论删除成功');
-                        vm.getFirstLevelComment(vm.currentArticleId);
+                        vm.getFirstLevelComment(vm.currentForumId);
                     }
                 });
             },
-            getMoreLevelComment(articleId) {
+            getMoreLevelComment(forumId) {
                 let vm = this;
 
-                vm.currentArticleId = articleId;
-                vm.$axios.post('/mapis/article/getMoreLevelComment', {articleId: articleId}).then((res) => {
+                vm.currentForumId = forumId;
+                vm.$axios.post('/mapis/forum/getMoreLevelComment', {forumId: forumId}).then((res) => {
                     if(res.data.state) {
                         vm.moreLevelComment = res.data.list;
                         vm.moreLevelVisible = true;
                     }
                 });
             },
-            getFirstLevelComment(articleId) {
+            getFirstLevelComment(forumId) {
                 let vm = this;
 
-                vm.currentArticleId = articleId;
-                vm.$axios.post('/mapis/article/getFirstLevelComment', {articleId: articleId}).then((res) => {
+                vm.currentForumId = forumId;
+                vm.$axios.post('/mapis/forum/getFirstLevelComment', {forumId: forumId}).then((res) => {
                     if(res.data.state) {
                         vm.firstLevelComment = res.data.list;
                         vm.firstLevelVisible = true;
@@ -264,4 +252,5 @@
         margin-bottom: 5px;
     }
 </style>
+
 

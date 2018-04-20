@@ -390,17 +390,6 @@ const urls ={
             'picture_addr': '/static/img/img.jpg'
         }
     },
-    '/mapis/test/getLabels': {
-        'state': 1,
-        'msg': '',
-        'list|12': [
-            {
-                'paper_label_id|1': [1, 2, 3, 4, 5],
-                'paper_label_name': '@ctitle(5)',
-                'paper_label_status': true
-            }
-        ]
-    },
     '/mapis/test/editTestPaper': {
         'state': 1,
         'msg': ''
@@ -447,7 +436,52 @@ const urls ={
             'region_two': '@ctitle(20)',
             'region_three': '@ctitle(20)'
         }
-    }
+    },
+    '/mapis/test/editAnswer': {
+        'state': 1,
+        'msg': ''
+    },
+    '/mapis/test/addAnswer': {
+        'state': 1,
+        'msg': ''
+    },
+    '/mapis/test/searchTest': {
+        'state': 1,
+        'msg': '',
+        'list|3': [
+            {
+                'test_id|+1': 343,
+                'test_name': '@ctitle(10)',
+                'test_num|+10': 34,
+                'typeName': '@ctitle(10)',
+                'picture_addr': '/static/img/img.jpg'
+            }
+        ],
+        'total': 3
+    },
+    '/mapis/test/deleteTest': {
+        'state': 1,
+        'msg': ''
+    },
+    '/mapis/test/getLabels': {
+        'state': 1,
+        'msg': '',
+        'list|12': [
+            {
+                'paper_label_id|1': [1, 2, 3, 4, 5],
+                'paper_label_name': '@ctitle(5)',
+                'paper_label_status': true
+            }
+        ]
+    },
+    '/mapis/test/changeLabelStatus': {
+        'state': 1,
+        'msg': ''
+    },
+    '/mapis/test/addLabel': {
+        'state': 1,
+        'msg': ''
+    },
 
 };
 

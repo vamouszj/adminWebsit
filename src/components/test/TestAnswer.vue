@@ -1,6 +1,6 @@
 <template>
     <div class="table">
-        <div class="crumbs">
+        <div class="crumbs"  v-if="showCrumb">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 测试管理</el-breadcrumb-item>
                 <el-breadcrumb-item>测试答案</el-breadcrumb-item>
@@ -35,6 +35,16 @@
     export default {
         components: {ElButton},
         name: "test-answer",
+        props: {
+            showCrumb: {
+                type: Boolean,
+                required: false
+            },
+            newId: {
+                type: Number,
+                required: false
+            }
+        },
         data() {
             let vm = this;
             return {
@@ -68,6 +78,8 @@
 
                 if(vm.testId > 0) {
                     vm.editAnswers();
+                }else {
+                    vm.addAnswers();
                 }
             },
             editAnswers() {
@@ -78,9 +90,9 @@
                     return;
                 }
 
-                vm.$axios.post('/mapis/test/editAnswer', {answers: vm.answer}).then((res) => {
+                vm.$axios.post('/mapis/test/editAnswer', {answers: vm.answer, testId: vm.testId}).then((res) => {
                     if(res.data.state) {
-                        disabled = true;
+                        vm.disabled = true;
                         vm.getTestResults();
                     }
                 })
@@ -93,10 +105,11 @@
                     return;
                 }
 
-                vm.$axios.post('/mapis/test/editAnswer', {answers: vm.answer, testId: vm.testId}).then((res) => {
+                vm.$axios.post('/mapis/test/addAnswer', {answers: vm.answer, testId: vm.newId}).then((res) => {
                     if(res.data.state) {
-                        disabled = true;
-                        vm.getTestResults();
+                        vm.$emit('test', true);
+                    }else {
+                        vm.$emit('test', false);
                     }
                 })
             }

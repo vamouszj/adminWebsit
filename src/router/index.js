@@ -60,7 +60,6 @@ export default new Router({
                     component: resolve => require(['../components/test/TestList.vue'], resolve)
                 },
                 {
-
                     name: 'testpaper',
                     path: '/testpaper/:testId',
                     component: resolve => require(['../components/test/TestPaper.vue'], resolve)
@@ -75,6 +74,17 @@ export default new Router({
                     path: '/testanswer/:testId',
                     component: resolve => require(['../components/test/TestAnswer.vue'], resolve)
                 },
+                {
+                    name: 'addtest',
+                    path: '/addtest',
+                    component: resolve => require(['../components/test/AddTest.vue'], resolve)
+                },
+                {
+                    name: 'testsort',
+                    path: '/testsort',
+                    component: resolve => require(['../components/test/TestSort.vue'], resolve)
+                },
+
 
                 {
                     path: '/vuetable',

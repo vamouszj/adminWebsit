@@ -1,6 +1,6 @@
 <template>
     <div class="table">
-        <div class="crumbs">
+        <div class="crumbs" v-if="showCrumb">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 测试管理</el-breadcrumb-item>
                 <el-breadcrumb-item>测试</el-breadcrumb-item>
@@ -50,6 +50,12 @@
                 },
                 typeList: [],
                 disabled: false,
+            }
+        },
+        props: {
+            showCrumb: {
+                type: Boolean,
+                required: false
             }
         },
         created() {
@@ -102,7 +108,7 @@
                     }else {
                         console.log('err ' + key);
                         vm.$message.error('请检查内容，内容都不可为空')
-                        return;
+                        return false;
                     }
                 }
             },
@@ -112,14 +118,17 @@
                 let formData = new FormData();
                 let skipAry = ['picture_addr'];
 
-                vm.getFormData(keyArray, formData, skipAry);
+                if(!vm.getFormData(keyArray, formData, skipAry)) {
+                    return;
+                }
+
                 if(vm.$refs.file.files[0]) {
                     formData.append('picture_addr', vm.$refs.file.files[0]);
                 }else {
                     formData.append('picture_addr', vm.test.picture_addr)
                 }
 
-                vm.$axios.post('/mapis/test/editTestPaper', {testPaper: formData}).then((res) => {
+                vm.$axios.post('/mapis/test/editTestPaper', {testPaper: formData, testId: vm.testId}).then((res) => {
                     if(res.data.state) {
                         vm.getTestById(vm.testId);
                         vm.disabled = true;
@@ -137,21 +146,16 @@
                 }
 
                 //test_num在钩子函数中已经初始化，保证在getFormData不因为此两个字段而出错
-                vm.getFormData(keyArray, formData, []);
+                if(!vm.getFormData(keyArray, formData, [])) {
+                    return;
+                }
                 formData.append('picture_addr', vm.$refs.file.files[0]);
-
 
                 vm.$axios.post('/mapis/test/addTestPaper', {testPaper: formData}).then((res) => {
                     if(res.data.state) {
-                        vm.getTestById(res.data.testId);
-                        vm.disabled = true;
-
-                        vm.$router.push({
-                            name: 'testpaper',
-                            params: {
-                                testId: res.data.testId
-                            }
-                        })
+                        vm.$emit('paper', true, res.data.testId);
+                    }else {
+                        vm.$emit('paper', false);
                     }
                 });
             },

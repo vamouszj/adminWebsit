@@ -23,6 +23,9 @@
                     <el-form-item prop="author" label="作者">
                         <el-input v-model="article.author" placeholder="" :disabled="disabled"></el-input>
                     </el-form-item>
+                    <el-form-item prop="description" label="keyword" v-if="!disabled">
+                        <el-input placeholder="请输入关键字" v-model="article.keywords"></el-input>
+                    </el-form-item>
                     <el-form-item prop="description" label="描述">
                         <el-input
                             type="textarea"
@@ -139,7 +142,7 @@
                     }else {
                         console.log('err ' + key);
                         vm.$message.error('请检查内容，内容都不可为空')
-                        return;
+                        return false;
                     }
                 }
             },
@@ -150,7 +153,10 @@
                 let skipAry = ['picture_addr'];
                 let params = null;
 
-                vm.getFormData(keyArray, formData, skipAry);
+                if(!vm.getFormData(keyArray, formData, skipAry)) {
+                    return;
+                }
+
                 if(vm.$refs.file.files[0]) {
                     formData.append('picture_addr', vm.$refs.file.files[0]);
                 }else {
@@ -167,7 +173,7 @@
             },
             addArticle() {
                 let vm = this;
-                let keyArray = ['title', 'upload_date', 'typeId', 'author', 'description', 'content', 'read_num'];
+                let keyArray = ['title', 'upload_date', 'typeId', 'author', 'description', 'content', 'read_num', 'keywords'];
                 let formData = new FormData();
 
                 if(!vm.$refs.file.files[0]) {
@@ -176,8 +182,12 @@
                 }
 
                 //read_num和upload_date在钩子函数中已经初始化，保证在getFormData不因为此两个字段而出错
-                vm.getFormData(keyArray, formData, []);
+                if(!vm.getFormData(keyArray, formData, [])) {
+                    return;
+                }
+
                 formData.append('picture_addr', vm.$refs.file.files[0]);
+                console.log(formData.get('keywords'));
 
                 vm.$axios.post('/mapis/article/addArticle', {article: formData}).then((res) => {
                     if(res.data.state) {

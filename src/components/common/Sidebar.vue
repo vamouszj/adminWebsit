@@ -25,12 +25,10 @@
             return {
                 items: [
                     {
-                        icon: 'el-icon-setting',
                         index: 'user',
                         title: '用户管理'
                     },
                     {
-                        icon: 'el-icon-menu',
                         index: '2',
                         title: '文章管理',
                         subs: [
@@ -49,7 +47,6 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-date',
                         index: '3',
                         title: '音乐管理',
                         subs: [
@@ -68,7 +65,6 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-date',
                         index: '4',
                         title: '论坛管理',
                         subs: [
@@ -83,7 +79,6 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-upload2',
                         index: '5',
                         title: '测试管理',
                         subs: [
@@ -92,8 +87,12 @@
                                 title: '测试列表'
                             },
                             {
-                                index: '/forumsort',
+                                index: '/testsort',
                                 title: '分类管理'
+                            },
+                            {
+                                index: '/addtest',
+                                title: '添加测试'
                             }
                         ]
                     },

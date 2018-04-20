@@ -1,6 +1,6 @@
 <template>
     <div class="table">
-        <div class="crumbs">
+        <div class="crumbs"  v-if="showCrumb">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 测试管理</el-breadcrumb-item>
                 <el-breadcrumb-item>问题</el-breadcrumb-item>
@@ -66,6 +66,16 @@
     export default {
         components: {ElButton},
         name: "test-question",
+        props: {
+            showCrumb: {
+                type: Boolean,
+                required: false
+            },
+            newId: {
+                type: Number,
+                required: false
+            }
+        },
         data() {
             let vm = this;
             return {
@@ -139,30 +149,22 @@
                 let vm = this;
 
                 let questionAry = vm.sortingData();
-                vm.$axios.post('/mapis/test/editQuestions', {'questions': questionAry, testId: vm.testId}).then((res) => {
+                vm.$axios.post('/mapis/test/editQuestions', {questions: questionAry, testId: vm.testId}).then((res) => {
                     if(res.data.state) {
                         vm.getTestQuestions(vm.testId);
                         vm.disabled = true;
                     }
                 })
             },
-
-            //TODO  有点Bug，testId为0
             sendNewTestQuestions() {
                 let vm = this;
 
                 let questionAry = vm.sortingData();
-                vm.$axios.post('/mapis/test/addQuestions', {'questions': questionAry}).then((res) => {
+                vm.$axios.post('/mapis/test/addQuestions', {questions: questionAry, testId: vm.newId}).then((res) => {
                     if(res.data.state) {
-                        vm.getTestQuestions(vm.testId);
-                        vm.disabled = true;
-
-                        vm.$router.push({
-                            name: 'testquestion',
-                            params: {
-                                testId: res.data.testId
-                            }
-                        })
+                        vm.$emit('question', true);
+                    }else {
+                        vm.$emit('question', false);
                     }
                 })
             },
@@ -188,7 +190,6 @@
                     }
                 });
 
-                console.log(dataAry);
                 if(dataAry.length >= 1) {
                     return dataAry;
                 }
@@ -197,7 +198,7 @@
             getTestQuestions() {
                 let vm = this;
 
-                vm.$axios.post('/mapis/test/getQuestions').then((res) => {
+                vm.$axios.post('/mapis/test/getQuestions', {testId: vm.testId}).then((res) => {
                     if(res.data.state) {
                         vm.tableData = res.data.list;
                     }

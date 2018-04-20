@@ -23,7 +23,9 @@
                             <el-option v-for="(type, index) in typeList" :label="type.music_label_name" :value="type.music_label_id" :key="index" :disabled="disabled"></el-option>
                         </el-select>
                     </el-form-item>
-
+                    <el-form-item prop="description" label="keyword" v-if="!disabled">
+                        <el-input placeholder="请输入关键字" v-model="music.keywords"></el-input>
+                    </el-form-item>
                     <el-form-item prop="description" label="描述">
                         <el-input
                             type="textarea"
@@ -129,18 +131,21 @@
                     }else {
                         console.log('err ' + key);
                         vm.$message.error('请检查内容，内容都不可为空')
-                        return;
+                        return false;
                     }
                 }
             },
             //TODO
-            editArticle() {
+            editMusic() {
                 let vm = this;
                 let keyArray = ['music_id', 'name', 'musician', 'typeId', 'upload_date', 'description', 'play_num'];
                 let skipAry = ['img_addr', 'save_addr'];
                 let formData = new FormData();
 
-                vm.getFormData(keyArray, formData, skipAry);
+                if(!vm.getFormData(keyArray, formData, skipAry)) {
+                    return;
+                }
+
                 if(vm.$refs.picture.files[0]) {
                     formData.append('img_addr', vm.$refs.picture.files[0]);
                 }else {
@@ -160,13 +165,15 @@
                     }
                 });
             },
-            addArticle() {
+            addMusic() {
                 let vm = this;
-                let keyArray = ['name', 'musician', 'typeId', 'upload_date', 'description', 'play_num'];
+                let keyArray = ['name', 'musician', 'typeId', 'upload_date', 'description', 'play_num', 'keywords'];
                 let formData = new FormData();
 
                 //play_num和upload_date在钩子函数中已经初始化，保证在getFormData不因为此两个字段而出错
-                vm.getFormData(keyArray, formData, []);
+                if(!vm.getFormData(keyArray, formData, [])) {
+                    return;
+                }
 
                 if(!vm.$refs.picture.files[0] || !vm.$refs.audio.files[0]) {
                     vm.$message.error('请检查内容，内容都不可为空')
@@ -193,9 +200,9 @@
             sendArticle() {
                 let vm = this;
                 if(vm.musicId > 0) {
-                    vm.editArticle();
+                    vm.editMusic();
                 }else {
-                    vm.addArticle();
+                    vm.addMusic();
                 }
             },
         }

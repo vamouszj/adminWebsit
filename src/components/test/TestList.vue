@@ -9,7 +9,7 @@
         <div class="handle-box">
             <div class="table">
                 <div class="handle-box mb15">
-                    <el-button type="primary" icon="delete" class="handle-del mr10" @click="deleteArticles">批量删除</el-button>
+                    <el-button type="primary" icon="delete" class="handle-del mr10" @click="deleteTest">批量删除</el-button>
                     <el-button type="primary" icon="search" @click="search" class="right">搜索</el-button>
                     <el-input v-model="selectWord" placeholder="筛选关键词" class="handle-input mr10 right" style="width: 200px;"></el-input>
 
@@ -106,7 +106,7 @@
                     return;
                 }
 
-                vm.$axios.post('/mapis/article/searchArticles', {keyWord: vm.selectWord}).then((res) => {
+                vm.$axios.post('/mapis/test/searchTest', {keyWord: vm.selectWord}).then((res) => {
                     if(res.data.state) {
                         vm.tableData = res.data.list;
                         vm.total = res.data.total;
@@ -133,7 +133,6 @@
                     }
                 })
             },
-            //todo
             editTestDetails(row) {
                 let vm = this;
 
@@ -143,29 +142,26 @@
                         testId: row.test_id
                     }
                 })
-
             },
-            deleteArticles(){
+            deleteTest(){
                 let vm = this;
-                let articlesId = [];
+                let testsId = [];
 
                 if(vm.multipleSelection.length <= 0) {
                     vm.$message.error('请至少选择一条数据');
                     return;
                 }
 
-                articlesId = vm.multipleSelection.map((item) => {
-                    return item.article_id;
+                testsId = vm.multipleSelection.map((item) => {
+                    return item.test_id;
                 });
 
-
-                vm.$axios.post('/mapis/article/deleteArticles', {articlesId: articlesId}).then((res) => {
+                vm.$axios.post('/mapis/test/deleteTest', {testsId: testsId}).then((res) => {
                     vm.multipleSelection = [];
                     if(res.data.state) {
                         vm.getData();
                     }
                 });
-
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;

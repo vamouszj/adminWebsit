@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="699a1a04-1585-4d01-bcea-be3bfbf84bea" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/article/AddArticle.vue" afterPath="$PROJECT_DIR$/src/components/article/AddArticle.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/music/AddMusic.vue" afterPath="$PROJECT_DIR$/src/components/music/AddMusic.vue" />
-      <change beforePath="$PROJECT_DIR$/src/components/test/TestPaper.vue" afterPath="$PROJECT_DIR$/src/components/test/TestPaper.vue" />
+      <change beforePath="$PROJECT_DIR$/src/components/test/TestAnswer.vue" afterPath="$PROJECT_DIR$/src/components/test/TestAnswer.vue" />
+      <change beforePath="$PROJECT_DIR$/src/components/test/TestQuestion.vue" afterPath="$PROJECT_DIR$/src/components/test/TestQuestion.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -85,14 +84,14 @@
       <file leaf-file-name="TestAnswer.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/test/TestAnswer.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="94" column="43" lean-forward="true" selection-start-line="94" selection-start-column="43" selection-end-line="94" selection-end-column="43" />
+            <state relative-caret-position="38">
+              <caret line="2" column="52" lean-forward="false" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddMusic.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AddMusic.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/music/AddMusic.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="275">
@@ -102,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestQuestion.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TestQuestion.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/test/TestQuestion.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="110" column="0" lean-forward="true" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
+            <state relative-caret-position="399">
+              <caret line="93" column="31" lean-forward="true" selection-start-line="93" selection-start-column="31" selection-end-line="93" selection-end-column="31" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-table#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -164,8 +163,8 @@
       <find>file</find>
       <find>sendArticle</find>
       <find>addArticle</find>
-      <find>getFormData</find>
       <find>console</find>
+      <find>getFormData</find>
     </findStrings>
     <replaceStrings>
       <replace>selectWord</replace>
@@ -208,9 +207,7 @@
         <option value="$PROJECT_DIR$/src/components/forum/ForumSort.vue" />
         <option value="$PROJECT_DIR$/src/components/music/MusicSort.vue" />
         <option value="$PROJECT_DIR$/src/components/test/TestResult.vue" />
-        <option value="$PROJECT_DIR$/src/components/test/TestAnswer.vue" />
         <option value="$PROJECT_DIR$/src/components/test/AddTest.vue" />
-        <option value="$PROJECT_DIR$/src/components/test/TestQuestion.vue" />
         <option value="$PROJECT_DIR$/src/components/test/TestList.vue" />
         <option value="$PROJECT_DIR$/src/mock.js" />
         <option value="$PROJECT_DIR$/src/router/index.js" />
@@ -219,6 +216,8 @@
         <option value="$PROJECT_DIR$/src/components/test/TestPaper.vue" />
         <option value="$PROJECT_DIR$/src/components/article/AddArticle.vue" />
         <option value="$PROJECT_DIR$/src/components/music/AddMusic.vue" />
+        <option value="$PROJECT_DIR$/src/components/test/TestAnswer.vue" />
+        <option value="$PROJECT_DIR$/src/components/test/TestQuestion.vue" />
       </list>
     </option>
   </component>
@@ -428,12 +427,12 @@
       <workItem from="1524102331471" duration="627000" />
       <workItem from="1524103169197" duration="19190000" />
       <workItem from="1524200765714" duration="642000" />
-      <workItem from="1524201655621" duration="5113000" />
+      <workItem from="1524201655621" duration="5324000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155201000" />
+    <option name="totallyTimeSpent" value="155412000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="213" width="1936" height="1056" extended-state="6" />
@@ -802,17 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/test/TestQuestion.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="110" column="0" lean-forward="true" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/test/TestSort.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -825,14 +813,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="46">
           <caret line="45" column="25" lean-forward="false" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/test/TestAnswer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="94" column="43" lean-forward="true" selection-start-line="94" selection-start-column="43" selection-end-line="94" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -858,6 +838,25 @@
         <state relative-caret-position="275">
           <caret line="176" column="17" lean-forward="true" selection-start-line="176" selection-start-column="17" selection-end-line="176" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/test/TestAnswer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="52" lean-forward="false" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/test/TestQuestion.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="93" column="31" lean-forward="true" selection-start-line="93" selection-start-column="31" selection-end-line="93" selection-end-column="31" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

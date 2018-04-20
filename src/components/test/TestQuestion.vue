@@ -1,6 +1,6 @@
 <template>
     <div class="table">
-        <div class="crumbs"  v-if="showCrumb">
+        <div class="crumbs"  v-if="showCrumb || show">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 测试管理</el-breadcrumb-item>
                 <el-breadcrumb-item>问题</el-breadcrumb-item>
@@ -82,6 +82,7 @@
                 testId: this.$route.params.testId,
                 tableData: [],
                 disabled: false,
+                show: false
             }
         },
         mounted() {
@@ -90,6 +91,7 @@
             if(vm.testId > 0) {
                 vm.disabled = true;
                 vm.getTestQuestions(vm.testId);
+                vm.show = true;
             }else {
                 vm.disabled = false;
                 vm.addRow();

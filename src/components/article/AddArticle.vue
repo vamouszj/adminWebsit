@@ -141,10 +141,12 @@
                         formData.append(key, vm.article[key]);
                     }else {
                         console.log('err ' + key);
-                        vm.$message.error('请检查内容，内容都不可为空')
+                        vm.$message.error('请检查内容，内容都不可为空');   //
                         return false;
                     }
                 }
+
+                return true;
             },
             editArticle() {
                 let vm = this;
@@ -177,7 +179,8 @@
                 let formData = new FormData();
 
                 if(!vm.$refs.file.files[0]) {
-                    vm.$message.error('请检查内容，内容都不可为空')
+                    console.log('err: ' + 'picture_addr');
+                    vm.$message.error('请检查内容，内容不可为空');
                     return;
                 }
 
@@ -187,19 +190,18 @@
                 }
 
                 formData.append('picture_addr', vm.$refs.file.files[0]);
-                console.log(formData.get('keywords'));
 
                 vm.$axios.post('/mapis/article/addArticle', {article: formData}).then((res) => {
                     if(res.data.state) {
-                        vm.getArticleById(res.data.articleId);
-                        vm.disabled = true;
-
                         vm.$router.push({
                             name: 'article',
                             params: {
                                 articleId: res.data.articleId
                             }
-                        })
+                        });
+
+                        vm.getArticleById(res.data.articleId);
+                        vm.disabled = true;
                     }
                 });
             },

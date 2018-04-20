@@ -1,6 +1,6 @@
 <template>
     <div class="table">
-        <div class="crumbs" v-if="showCrumb">
+        <div class="crumbs" v-if="showCrumb || shwSelf">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 测试管理</el-breadcrumb-item>
                 <el-breadcrumb-item>测试</el-breadcrumb-item>
@@ -50,6 +50,7 @@
                 },
                 typeList: [],
                 disabled: false,
+                shwSelf: false
             }
         },
         props: {
@@ -67,6 +68,7 @@
             if(vm.testId > 0) {
                 vm.disabled = true;
                 vm.getTestById(vm.testId);
+                vm.shwSelf = true;
             }else {
                 vm.test.test_num = 1;
             }
@@ -111,6 +113,8 @@
                         return false;
                     }
                 }
+
+                return true;
             },
             editTestPaper() {
                 let vm = this;
@@ -121,6 +125,7 @@
                 if(!vm.getFormData(keyArray, formData, skipAry)) {
                     return;
                 }
+
 
                 if(vm.$refs.file.files[0]) {
                     formData.append('picture_addr', vm.$refs.file.files[0]);

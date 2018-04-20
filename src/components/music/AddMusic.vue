@@ -134,8 +134,9 @@
                         return false;
                     }
                 }
+
+                return true;
             },
-            //TODO
             editMusic() {
                 let vm = this;
                 let keyArray = ['music_id', 'name', 'musician', 'typeId', 'upload_date', 'description', 'play_num'];
@@ -185,15 +186,15 @@
 
                 vm.$axios.post('/mapis/music/addMusic', {music: formData}).then((res) => {
                     if(res.data.state) {
-                        vm.getMusicById(res.data.musicId);
-                        vm.disabled = true;
-
                         vm.$router.push({
                             name: 'music',
                             params: {
                                 musicId: res.data.musicId
                             }
-                        })
+                        });
+
+                        vm.getMusicById(res.data.musicId);
+                        vm.disabled = true;
                     }
                 });
             },

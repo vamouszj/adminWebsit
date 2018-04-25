@@ -23,7 +23,7 @@
                     <el-form-item prop="author" label="作者">
                         <el-input v-model="article.author" placeholder="" :disabled="disabled"></el-input>
                     </el-form-item>
-                    <el-form-item prop="description" label="keyword" v-if="!disabled">
+                    <el-form-item prop="description" label="keyword" v-if="addFlag">
                         <el-input placeholder="请输入关键字" v-model="article.keywords"></el-input>
                     </el-form-item>
                     <el-form-item prop="description" label="描述">
@@ -83,6 +83,7 @@
                 editorOption: {
                 },
                 disabled: false,
+                addFlag: false
             }
         },
         components: {
@@ -103,6 +104,7 @@
 
                 vm.article.upload_date = day.getFullYear() + '-' + (day.getMonth() + 1) + '-' + day.getDate();
                 vm.article.read_num = 1;
+                vm.addFlag = true;
             }
         },
         methods:{
@@ -165,8 +167,13 @@
                     formData.append('picture_addr', vm.article.picture_addr)
                 }
 
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
 
-                vm.$axios.post('/mapis/article/editArticle', {article: formData}).then((res) => {
+                vm.$axios.post('/mapis/article/editArticle', formData, config).then((res) => {
                     if(res.data.state) {
                         vm.getArticleById(vm.articleId);
                         vm.disabled = true;
@@ -191,8 +198,15 @@
 
                 formData.append('picture_addr', vm.$refs.file.files[0]);
 
-                vm.$axios.post('/mapis/article/addArticle', {article: formData}).then((res) => {
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+
+                vm.$axios.post('/mapis/article/addArticle', formData, config).then((res) => {
                     if(res.data.state) {
+                        vm.addFlag = false;
                         vm.$router.push({
                             name: 'article',
                             params: {

@@ -9,7 +9,7 @@ import "babel-polyfill";
 
 Vue.use(ElementUI);
 Vue.prototype.$axios = axios;
-require('./mock');
+/*require('./mock');*/
 
 new Vue({
     router,

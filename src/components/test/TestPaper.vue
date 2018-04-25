@@ -133,7 +133,13 @@
                     formData.append('picture_addr', vm.test.picture_addr)
                 }
 
-                vm.$axios.post('/mapis/test/editTestPaper', {testPaper: formData, testId: vm.testId}).then((res) => {
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+
+                vm.$axios.post('/mapis/test/editTestPaper', formData, config).then((res) => {
                     if(res.data.state) {
                         vm.getTestById(vm.testId);
                         vm.disabled = true;
@@ -156,7 +162,13 @@
                 }
                 formData.append('picture_addr', vm.$refs.file.files[0]);
 
-                vm.$axios.post('/mapis/test/addTestPaper', {testPaper: formData}).then((res) => {
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+
+                vm.$axios.post('/mapis/test/addTestPaper', formData, config).then((res) => {
                     if(res.data.state) {
                         vm.$emit('paper', true, res.data.testId);
                     }else {

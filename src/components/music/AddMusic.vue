@@ -23,7 +23,7 @@
                             <el-option v-for="(type, index) in typeList" :label="type.music_label_name" :value="type.music_label_id" :key="index" :disabled="disabled"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item prop="description" label="keyword" v-if="!disabled">
+                    <el-form-item prop="description" label="keyword" v-if="addFlag">
                         <el-input placeholder="请输入关键字" v-model="music.keywords"></el-input>
                     </el-form-item>
                     <el-form-item prop="description" label="描述">
@@ -76,6 +76,7 @@
                 },
                 typeList: [],
                 disabled: false,
+                addFlag: false
             }
         },
         created() {
@@ -92,6 +93,7 @@
 
                 vm.music.upload_date = day.getFullYear() + '-' + (day.getMonth() + 1) + '-' + day.getDate();
                 vm.music.play_num = 1;
+                vm.addFlag = true;
             }
         },
         methods:{
@@ -159,7 +161,13 @@
                     formData.append('save_addr', vm.music.save_addr)
                 }
 
-                vm.$axios.post('/mapis/music/editMusic', {music: formData}).then((res) => {
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+
+                vm.$axios.post('/mapis/music/editMusic', formData, config).then((res) => {
                     if(res.data.state) {
                        vm.getMusicById(vm.musicId);
                        vm.disabled = true;
@@ -184,8 +192,15 @@
                 formData.append('img_addr', vm.$refs.picture.files[0]);
                 formData.append('save_addr', vm.$refs.audio.files[0]);
 
-                vm.$axios.post('/mapis/music/addMusic', {music: formData}).then((res) => {
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+
+                vm.$axios.post('/mapis/music/addMusic', formData, config).then((res) => {
                     if(res.data.state) {
+                        vm.addFlag = false;
                         vm.$router.push({
                             name: 'music',
                             params: {
